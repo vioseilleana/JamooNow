@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JamooNow - Herbal Wellness Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+         :root {
+            /* REVISED COLORS */
+            --primary: #8ca93d;
+            /* Main Moss Green */
+            --primary-light: #a4c64f;
+            /* Slightly lighter green for gradients */
+            --secondary: #db8238;
+            /* Earthy Orange */
+            --accent: #db8238;
+            /* Using the orange for buttons/highlights */
+            /* Standard Colors */
+            --emergency: #F44336;
+            --light: #F5F5F5;
+            --dark: #333;
+            --gray: #757575;
+        }
+        
+        body {
+            /* Softer background to match earthy tones */
+            background: linear-gradient(135deg, #f0f4e8 0%, #dfe6d5 100%);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+        
+        .app-container {
+            max-width: 428px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* Header & Navigation */
+        
+        .header {
+            /* New Gradient using the Moss Green */
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 20px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+        }
+        
+        .search-bar {
+            display: flex;
+            background: rgba(255, 255, 255, 0.25);
+            /* Increased opacity slightly for contrast */
+            border-radius: 25px;
+            padding: 10px 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .search-bar input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 100%;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+        
+        .search-bar input::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        /* Main Content Sections */
+        
+        .section {
+            padding: 20px 16px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* Quick Actions Grid */
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .action-btn {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        action .action-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .action-btn.emergency {
+            background: var(--emergency);
+            color: white;
+        }
+        
+        .action-btn.emergency .icon {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .action-btn .icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 8px;
+            background: #f4f8ec;
+            /* Very light version of primary */
+        }
+        /* Subscription Plans */
+        
+        .plans-container {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .plan-card {
+            border: 2px solid #eee;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .plan-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 15px rgba(140, 169, 61, 0.15);
+        }
+        
+        .plan-card.premium {
+            border-color: var(--secondary);
+            background: linear-gradient(to bottom right, white, #fffcf5);
+        }
+        
+        .plan-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .plan-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .plan-features li {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .plan-features li:before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+        }
+        /* Product Grid */
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .product-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            background: white;
+        }
+        
+        .product-image {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+        
+        .product-info {
+            padding: 12px;
+        }
+        
+        .product-price {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        /* SOS Button */
+        
+        .sos-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .sos-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--emergency);
+            color: white;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(244, 67, 54, 0.3);
+        }
+        
+        .sos-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 10px rgba(244, 67, 54, 0.2);
+        }
+        /* Map Section */
+        
+        .map-container {
+            height: 200px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .map-marker {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--secondary);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        /* Bottom Navigation */
+        
+        .bottom-nav {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 12px;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-item .icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+        /* Consultation Section */
+        
+        .consult-options {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .consult-card {
+            padding: 20px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .consult-card.ai {
+            background: linear-gradient(135deg, #eff7e1 0%, #dcebc2 100%);
+        }
+        
+        .consult-card.doctor {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        }
+        /* Community Section */
+        
+        .community-grid {
+            display: grid;
+            gap: 12px;
+        }
+        
+        .community-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .community-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        /* Responsive */
+        
+        @media (max-width: 428px) {
+            .app-container {
+                width: 100%;
+            }
+        }
+        /* Animations */
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(244, 67, 54, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="nav-top">
+                <div class="logo">
+                    <span class="logo-icon">🌿</span>
+                    <span>Jamoonow</span>
+                </div>
+                <div style="display: flex; gap: 15px; font-size: 20px;">
+                    <span>🔔</span>
+                    <span>👤</span>
+                </div>
+            </div>
+            <div class="search-bar">
+                <span>🔍</span>
+                <input type="text" placeholder="Search herbs, doctors, or communities...">
+            </div>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title">⚡ Quick Actions</h2>
+            <div class="quick-actions">
+                <a href="#sos" class="action-btn emergency">
+                    <div class="icon">🆘</div>
+                    <span>SOS</span>
+                </a>
+                <a href="#consult" class="action-btn">
+                    <div class="icon">👨‍⚕️</div>
+                    <span>Consult</span>
+                </a>
+                <a href="#shop" class="action-btn">
+                    <div class="icon">🛒</div>
+                    <span>Shop</span>
+                </a>
+                <a href="#community" class="action-btn">
+                    <div class="icon">👥</div>
+                    <span>Community</span>
+                </a>
+                <a href="#nearby" class="action-btn">
+                    <div class="icon">📍</div>
+                    <span>Nearby</span>
+                </a>
+                <a href="#tracker" class="action-btn">
+                    <div class="icon">📊</div>
+                    <span>Health</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="section" id="sos">
+            <h2 class="section-title">🆘 Emergency SOS</h2>
+            <div class="sos-container">
+                <button class="sos-btn pulse" onclick="triggerSOS()">
+                    <span style="font-size: 32px;">🆘</span>
+                    <span>SOS</span>
+                </button>
+                <p style="color: var(--gray); font-size: 14px;">
+                    Press and hold for 3 seconds to alert nearby helpers and emergency contacts
+                </p>
+            </div>
+            <div style="background: #FFF3E0; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <h4 style="color: var(--secondary); margin-bottom: 8px;">🚨 Emergency Contacts</h4>
+                <p style="font-size: 14px; color: var(--gray);">
+                    Nearby Helpers: <strong>12 available</strong> within 5km<br> Response Time: <strong>Avg. 8 minutes</strong>
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="consult">
+            <h2 class="section-title">💬 Get Consultation</h2>
+            <div class="consult-options">
+                <a href="#ai-consult" class="consult-card ai">
+                    <div style="font-size: 32px;">🤖</div>
+                    <div>
+                        <h4 style="color: var(--primary);">AI Herbal Assistant</h4>
+                        <p style="font-size: 14px; color: var(--gray);">Instant answers • 24/7 • Free</p>
+                    </div>
+                </a>
+                <a href="#doctor-consult" class="consult-card doctor">
+                    <div style="font-size: 32px;">👨‍⚕️</div>
+                    <div>
+                        <h4 style="color: var(--secondary);">Live Doctor Consultation</h4>
+                        <p style="font-size: 14px; color: var(--gray);">Video call • E-Prescription • Insurance</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="section" id="subscription">
+            <h2 class="section-title">⭐ Subscription Plans</h2>
+            <div class="plans-container">
+                <div class="plan-card">
+                    <h3>Basic</h3>
+                    <div class="plan-price">FREE</div>
+                    <ul class="plan-features">
+                        <li>5 AI consultations/month</li>
+                        <li>Basic community access</li>
+                    </ul>
+                    <button style="width: 100%; padding: 12px; background: var(--light); border: none; border-radius: 8px; color: var(--gray);">
+                        Current Plan
+                    </button>
+                </div>
+
+                <div class="plan-card premium">
+                    <div class="plan-badge">POPULAR</div>
+                    <h3>Premium</h3>
+                    <div class="plan-price">Rp 150,000<span style="font-size: 14px; color: var(--gray);">/month</span></div>
+                    <ul class="plan-features">
+                        <li>Unlimited AI consultations</li>
+                        <li>FREE 3 customized products</li>
+                        <li>Unlimited Live doctor sessions/month</li>
+                        <li>Exclusive community groups</li>
+                    </ul>
+                    <button style="width: 100%; padding: 12px; background: var(--secondary); border: none; border-radius: 8px; color: white; font-weight: bold;">
+                        Upgrade Now
+                    </button>
+                </div>
+
+                <section class="section" id="shop">
+                    <h2 class="section-title">🛒 JamooNow Products</h2>
+                    <div class="products-grid">
+                        <div class="product-card">
+                            <div class="product-image">🌿</div>
+                            <div class="product-info">
+                                <h4>Imun Ku</h4>
+                                <p style="font-size: 12px; color: var(--gray);">Honey, Ginger, Lemon</p>
+                                <div class="product-price">Rp 35,000</div>
+                                <button style="width: 100%; padding: 8px; background: var(--accent); border: none; border-radius: 6px; color: white; margin-top: 8px;">
+                            Add to Cart
+                        </button>
+                            </div>
+                        </div>
+
+                        <div class="product-card">
+                            <div class="product-image">🍵</div>
+                            <div class="product-info">
+                                <h4>Teh Daun Pegagan</h4>
+                                <p style="font-size: 12px; color: var(--gray);">Pure Centella Asiatica leaves tea</p>
+                                <div class="product-price">Rp 25,000</div>
+                                <button style="width: 100%; padding: 8px; background: var(--accent); border: none; border-radius: 6px; color: white; margin-top: 8px;">
+                            Add to Cart
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="section" id="nearby">
+                    <h2 class="section-title">📍 Nearby IBU JAMU</h2>
+                    <div class="map-container">
+                        <div class="map-marker"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h4 style="color: var(--primary);">Herbal Shop Central</h4>
+                            <p style="font-size: 14px; color: var(--gray);">0.8km • Open until 21:00</p>
+                        </div>
+                        <button style="padding: 8px 16px; background: var(--primary); color: white; border: none; border-radius: 8px;">
+                    Directions
+                </button>
+                    </div>
+                </section>
+
+                <section class="section" id="community">
+                    <h2 class="section-title">👥 Find Community</h2>
+                    <div class="community-grid">
+                        <div class="community-card">
+                            <div class="community-icon">🧘</div>
+                            <div>
+                                <h4>Yoga & Herbal Wellness</h4>
+                                <p style="font-size: 12px; color: var(--gray);">1,245 members • Active now</p>
+                            </div>
+                        </div>
+                        <div class="community-card">
+                            <div class="community-icon">👩‍🌾</div>
+                            <div>
+                                <h4>Urban Herbal Gardeners</h4>
+                                <p style="font-size: 12px; color: var(--gray);">890 members • Event today</p>
+                            </div>
+                        </div>
+                        <div class="community-card">
+                            <div class="community-icon">🩺</div>
+                            <div>
+                                <h4>Diabetes Support Group</h4>
+                                <p style="font-size: 12px; color: var(--gray);">2,150 members • Expert Q&A</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="profile">
+                    <h2 class="section-title">👤 My Profile</h2>
+                    <div style="background: #F5F5F5; padding: 20px; border-radius: 12px;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--primary-light); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;">
+                                👤
+                            </div>
+                            <div>
+                                <h3>BOBO HUSSIN PAMAN KIKUK</h3>
+                                <p style="color: var(--gray); font-size: 14px;">Premium Member • Since March 2024</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 10px;">
+                            <div>
+                                <div style="font-size: 18px; font-weight: bold; color: var(--primary);">12</div>
+                                <div style="font-size: 12px; color: var(--gray);">Consultations</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 18px; font-weight: bold; color: var(--secondary);">45</div>
+                                <div style="font-size: 12px; color: var(--gray);">Points</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 18px; font-weight: bold; color: var(--primary);">8</div>
+                                <div style="font-size: 12px; color: var(--gray);">Communities</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <nav class="bottom-nav">
+                    <a href="#" class="nav-item active">
+                        <span class="icon">🏠</span>
+                        <span>Home</span>
+                    </a>
+                    <a href="#shop" class="nav-item">
+                        <span class="icon">🛒</span>
+                        <span>Shop</span>
+                    </a>
+                    <a href="#consult" class="nav-item">
+                        <span class="icon">💬</span>
+                        <span>Consult</span>
+                    </a>
+                    <a href="#community" class="nav-item">
+                        <span class="icon">👥</span>
+                        <span>Community</span>
+                    </a>
+                    <a href="#profile" class="nav-item">
+                        <span class="icon">👤</span>
+                        <span>Profile</span>
+                    </a>
+                </nav>
+            </div>
+
+            <script>
+                // SOS Emergency Function
+                function triggerSOS() {
+                    if (confirm("Trigger emergency SOS? Nearby helpers will be notified of your location.")) {
+                        // In real app, this would:
+                        // 1. Get current location
+                        // 2. Send emergency alert to server
+                        // 3. Notify nearby helpers
+                        // 4. Start countdown
+
+                        document.querySelector('.sos-btn').style.background = '#D32F2F';
+                        document.querySelector('.sos-btn').innerHTML = '<span style="font-size: 32px;">🚨</span><span>HELP COMING</span>';
+
+                        // Show notification
+                        showNotification('Emergency alert sent! Helpers notified.', 'emergency');
+
+                        // Simulate helper response
+                        setTimeout(() => {
+                            showNotification('Helper accepted: Sarah (500m away)', 'helper');
+                        }, 2000);
+
+                        setTimeout(() => {
+                            showNotification('2 more helpers responding...', 'helper');
+                        }, 4000);
+                    }
+                }
+
+                // Notification system
+                function showNotification(message, type) {
+                    const notification = document.createElement('div');
+                    const color = type === 'emergency' ? '#F44336' : '#8ca93d'; // Updated to use new green
+                    notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${color};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                z-index: 10000;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                animation: slideIn 0.3s ease;
+            `;
+                    notification.textContent = message;
+                    document.body.appendChild(notification);
+
+                    setTimeout(() => {
+                        notification.style.animation = 'slideOut 0.3s ease';
+                        setTimeout(() => notification.remove(), 300);
+                    }, 3000);
+                }
+
+                // Add CSS animations for notifications
+                const style = document.createElement('style');
+                style.textContent = `
+            @keyframes slideIn {
+                from { top: 50px; opacity: 0; }
+                to { top: 100px; opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { top: 100px; opacity: 1; }
+                to { top: 150px; opacity: 0; }
+            }
+        `;
+                document.head.appendChild(style);
+
+                // Smooth scroll for navigation
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        if (targetId === '#') return;
+
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            // Update active nav item
+                            document.querySelectorAll('.nav-item').forEach(item => {
+                                item.classList.remove('active');
+                            });
+                            if (this.classList.contains('nav-item')) {
+                                this.classList.add('active');
+                            }
+
+                            // Scroll to section
+                            targetElement.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+
+                // Add interactive features
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Add pulse animation to SOS button every 5 seconds
+                    setInterval(() => {
+                        const sosBtn = document.querySelector('.sos-btn');
+                        sosBtn.classList.add('pulse');
+                        setTimeout(() => sosBtn.classList.remove('pulse'), 2000);
+                    }, 5000);
+
+                    // Add to cart functionality
+                    document.querySelectorAll('.product-card button').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const productCard = this.closest('.product-card');
+                            const productName = productCard.querySelector('h4').textContent;
+                            showNotification(`${productName} added to cart!`, 'success');
+                        });
+                    });
+
+                    // Plan upgrade buttons
+                    document.querySelectorAll('.plan-card button').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const planName = this.closest('.plan-card').querySelector('h3').textContent;
+                            if (!planName.includes('Basic')) {
+                                showNotification(`Upgrading to ${planName} plan...`, 'success');
+                            }
+                        });
+                    });
+                });
+            </script>
+</body>
+
+</html>
